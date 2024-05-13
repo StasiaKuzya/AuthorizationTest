@@ -9,6 +9,9 @@ import SwiftUI
 import Firebase
 
 struct PasswordRecoveryView: View {
+    @State private var showAlert = false
+    @State private var errorMessage: String = ""
+    @State private var alertText: String = ""
     @Binding var email: String
     @Binding var showModal: Bool
     
@@ -22,27 +25,43 @@ struct PasswordRecoveryView: View {
             
             ButtonView(
                 buttonText: "Send Recovery Email",
-                buttonAction: {
-                    Auth.auth().sendPasswordReset(withEmail: email) { error in
-                        if let error = error {
-                            // Обработка ошибки...
-                        } else {
-                            // Успешная отправка письма...
-                        }
-                        showModal = false
-                    }
-                },
+                buttonAction: { sendPasswordReset() },
                 backgroundColor: .green,
                 foregroundColor: .white)
             
             ButtonView(
-                buttonText: "Chancel",
+                buttonText: "Cancel",
                 buttonAction: { showModal = false },
                 backgroundColor: .red,
                 foregroundColor: .white)
             
         }
         .padding([.leading, .trailing], 16)
+        .alert(isPresented: $showAlert) {
+            Alert(
+                title: Text(alertText),
+                message: Text(errorMessage),
+                dismissButton: .default(Text("OK"),
+                action: {
+                    if alertText == "Successful Password Reset" {
+                        showModal = false
+                    }
+                })
+            )
+        }
+    }
+    
+    private func sendPasswordReset() {
+        Auth.auth().sendPasswordReset(withEmail: email) { error in
+            if let error = error {
+                self.errorMessage = error.localizedDescription
+                self.alertText = "Reset Password Error"
+            } else {
+                self.errorMessage = "Check your inbox to reset your password"
+                self.alertText = "Successful Password Reset"
+            }
+            showAlert = true
+        }
     }
 }
 
