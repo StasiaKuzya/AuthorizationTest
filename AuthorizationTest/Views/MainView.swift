@@ -11,8 +11,14 @@ struct MainView: View {
     @Binding var showModal: Bool
     
     var body: some View {
-        Text("Hello!")
-            .font(.title)
+        ZStack {
+            LinearGradient(gradient: Gradient(colors: [Color.haki, Color.onyx]), startPoint: .topLeading, endPoint: .bottomTrailing).edgesIgnoringSafeArea(.all)
+            Text("Hello!")
+                .font(.largeTitle)
+                .bold()
+                .foregroundColor(.picker)
+        }
+        .navigationBarBackButtonHidden(true)
     }
 }
 
