@@ -18,40 +18,49 @@ struct SignUpView: View {
     @State private var alertText: String = ""
     
     var body: some View {
-        VStack(spacing: 20) {
-            Text("Sign Up")
-                .bold()
-                .font(.title)
+        ZStack {
+            LinearGradient(gradient: Gradient(colors: [Color.tomato, Color.sandy]), startPoint: .topLeading, endPoint: .bottomTrailing).edgesIgnoringSafeArea(.all)
+        
+            VStack(spacing: 80) {
+            VStack(alignment: .leading, spacing: 20) {
+                Text("Sign Up")
+                    .bold()
+                    .font(.title)
+                    .foregroundColor(.onyx)
+                
+                EmailTextField(email: $email)
+                PasswordSecureField(password: $password, text: "Password")
+                PasswordSecureField(password: $passwordConfirmation, text: "Repeat password")
+            }
+            .alert(isPresented: $showAlert) {
+                Alert(
+                    title: Text(alertText),
+                    message: Text(errorMessage),
+                    dismissButton: .default(Text("OK"),
+                                            action: {
+                                                if alertText == "Check your inbox to verify your email." {
+                                                    showModal = false
+                                                }
+                                            })
+                )
+            }
             
-            EmailTextField(email: $email)
-            PasswordSecureField(password: $password, text: "Password")
-            PasswordSecureField(password: $passwordConfirmation, text: "Repeat password")
-            
-            ButtonView(
-                buttonText: "Create account",
-                buttonAction: { signUp() },
-                backgroundColor: .green,
-                foregroundColor: .white)
-            
-            ButtonView(
-                buttonText: "Cancel",
-                buttonAction: { showModal = false },
-                backgroundColor: .red,
-                foregroundColor: .white)
+            VStack(spacing: 10) {
+                ButtonView(
+                    buttonText: "Create account",
+                    buttonAction: { signUp() },
+                    backgroundColor: .haki,
+                    foregroundColor: .white)
+                
+                ButtonView(
+                    buttonText: "Cancel",
+                    buttonAction: { showModal = false },
+                    backgroundColor: .onyx,
+                    foregroundColor: .white)
+            }
         }
-        .alert(isPresented: $showAlert) {
-            Alert(
-                title: Text(alertText),
-                message: Text(errorMessage),
-                dismissButton: .default(Text("OK"),
-                action: {
-                    if alertText == "Check your inbox to verify your email." {
-                        showModal = false
-                    }
-                })
-            )
+            .padding([.leading, .trailing, .bottom], 16)
         }
-        .padding([.leading, .trailing], 16)
     }
     
     func signUp() {

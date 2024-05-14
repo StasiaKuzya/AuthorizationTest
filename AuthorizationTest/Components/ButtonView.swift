@@ -23,9 +23,10 @@ struct ButtonView: View {
                 .bold()
                 .overlay(
                     RoundedRectangle(cornerRadius: 10.0)
-                        .stroke(.gray, lineWidth: 1)
+                        .stroke(.clear, lineWidth: 1)
                 )
                 .clipShape(RoundedRectangle(cornerRadius: 10.0))
+                .shadow(radius: 2)
         }
     }
 }

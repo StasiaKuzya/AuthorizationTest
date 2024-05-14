@@ -18,8 +18,10 @@ struct EmailTextField: View {
             .padding()
             .overlay(
                 RoundedRectangle(cornerRadius: 10.0)
-                .stroke(.gray, lineWidth: 1)
+                .stroke(.darkGrayAsh, lineWidth: 1)
             )
+            .background(.picker)
+            .clipShape(RoundedRectangle(cornerRadius: 10.0))
     }
 }
 

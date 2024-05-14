@@ -16,38 +16,47 @@ struct PasswordRecoveryView: View {
     @Binding var showModal: Bool
     
     var body: some View {
-        VStack(spacing: 20) {
-            Text("Password Recovery")
-                .bold()
-                .font(.title)
+        ZStack {
+            LinearGradient(gradient: Gradient(colors: [Color.tomato, Color.sandy]), startPoint: .topLeading, endPoint: .bottomTrailing).edgesIgnoringSafeArea(.all)
             
-            EmailTextField(email: $email)
-            
-            ButtonView(
-                buttonText: "Send Recovery Email",
-                buttonAction: { sendPasswordReset() },
-                backgroundColor: .green,
-                foregroundColor: .white)
-            
-            ButtonView(
-                buttonText: "Cancel",
-                buttonAction: { showModal = false },
-                backgroundColor: .red,
-                foregroundColor: .white)
-            
-        }
-        .padding([.leading, .trailing], 16)
-        .alert(isPresented: $showAlert) {
-            Alert(
-                title: Text(alertText),
-                message: Text(errorMessage),
-                dismissButton: .default(Text("OK"),
-                action: {
-                    if alertText == "Successful Password Reset" {
-                        showModal = false
-                    }
-                })
-            )
+            VStack(spacing: 20) {
+                VStack(alignment: .leading,spacing: 20) {
+                    Text("Password Recovery")
+                        .bold()
+                        .font(.title)
+                        .foregroundColor(.onyx)
+                    
+                    EmailTextField(email: $email)
+                }
+                
+                VStack(spacing: 10) {
+                    ButtonView(
+                        buttonText: "Send Recovery Email",
+                        buttonAction: { sendPasswordReset() },
+                        backgroundColor: .haki,
+                        foregroundColor: .white)
+                    
+                    ButtonView(
+                        buttonText: "Cancel",
+                        buttonAction: { showModal = false },
+                        backgroundColor: .onyx,
+                        foregroundColor: .white)
+                }
+                .padding(.bottom, 16)
+            }
+            .padding([.leading, .trailing], 16)
+            .alert(isPresented: $showAlert) {
+                Alert(
+                    title: Text(alertText),
+                    message: Text(errorMessage),
+                    dismissButton: .default(Text("OK"),
+                                            action: {
+                                                if alertText == "Successful Password Reset" {
+                                                    showModal = false
+                                                }
+                                            })
+                )
+            }
         }
     }
     
