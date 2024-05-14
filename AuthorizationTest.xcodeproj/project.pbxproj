@@ -40,7 +40,10 @@
 		5A9128FC2BF27C2100B81B5F /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 5A9128FB2BF27C2100B81B5F /* GoogleSignIn */; };
 		5A9128FE2BF27C2100B81B5F /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 5A9128FD2BF27C2100B81B5F /* GoogleSignInSwift */; };
 		5A9129012BF2AE4E00B81B5F /* HeadlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9129002BF2AE4E00B81B5F /* HeadlineView.swift */; };
-		5A9129032BF345EB00B81B5F /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9129022BF345EB00B81B5F /* LoginViewModel.swift */; };
+		5A9129032BF345EB00B81B5F /* FirebaseAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9129022BF345EB00B81B5F /* FirebaseAuthManager.swift */; };
+		5A9129072BF3603700B81B5F /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9129062BF3603700B81B5F /* LoginViewModel.swift */; };
+		5A9129092BF3628F00B81B5F /* PasswordRecoveryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9129082BF3628F00B81B5F /* PasswordRecoveryViewModel.swift */; };
+		5A91290B2BF3652800B81B5F /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A91290A2BF3652800B81B5F /* SignUpViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,7 +62,10 @@
 		5A9128F82BF26E8800B81B5F /* GoogleSignIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSignIn.swift; sourceTree = "<group>"; };
 		5A9128FF2BF2851100B81B5F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		5A9129002BF2AE4E00B81B5F /* HeadlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadlineView.swift; sourceTree = "<group>"; };
-		5A9129022BF345EB00B81B5F /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		5A9129022BF345EB00B81B5F /* FirebaseAuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthManager.swift; sourceTree = "<group>"; };
+		5A9129062BF3603700B81B5F /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		5A9129082BF3628F00B81B5F /* PasswordRecoveryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRecoveryViewModel.swift; sourceTree = "<group>"; };
+		5A91290A2BF3652800B81B5F /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,14 +119,10 @@
 		5A91287E2BF2081800B81B5F /* AuthorizationTest */ = {
 			isa = PBXGroup;
 			children = (
+				5A9129052BF35FDB00B81B5F /* Views */,
+				5A9129042BF35FCF00B81B5F /* ViewModels */,
 				5A9128FF2BF2851100B81B5F /* Info.plist */,
 				5A91287F2BF2081800B81B5F /* AuthorizationTestApp.swift */,
-				5A9128812BF2081800B81B5F /* LoginView.swift */,
-				5A9128C42BF21FE900B81B5F /* PasswordRecoveryView.swift */,
-				5A9128C62BF222D400B81B5F /* SignUpView.swift */,
-				5A9128F62BF24F1E00B81B5F /* MainView.swift */,
-				5A9129022BF345EB00B81B5F /* LoginViewModel.swift */,
-				5A9128C82BF2236700B81B5F /* Components */,
 				5A9128832BF2081A00B81B5F /* Assets.xcassets */,
 				5A9128852BF2081A00B81B5F /* Preview Content */,
 			);
@@ -145,6 +147,29 @@
 				5A9129002BF2AE4E00B81B5F /* HeadlineView.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		5A9129042BF35FCF00B81B5F /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				5A9129022BF345EB00B81B5F /* FirebaseAuthManager.swift */,
+				5A9129062BF3603700B81B5F /* LoginViewModel.swift */,
+				5A9129082BF3628F00B81B5F /* PasswordRecoveryViewModel.swift */,
+				5A91290A2BF3652800B81B5F /* SignUpViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		5A9129052BF35FDB00B81B5F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5A9128812BF2081800B81B5F /* LoginView.swift */,
+				5A9128C42BF21FE900B81B5F /* PasswordRecoveryView.swift */,
+				5A9128C62BF222D400B81B5F /* SignUpView.swift */,
+				5A9128F62BF24F1E00B81B5F /* MainView.swift */,
+				5A9128C82BF2236700B81B5F /* Components */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -246,12 +271,15 @@
 			files = (
 				5A9128CE2BF2242200B81B5F /* ButtonView.swift in Sources */,
 				5A9128C72BF222D400B81B5F /* SignUpView.swift in Sources */,
-				5A9129032BF345EB00B81B5F /* LoginViewModel.swift in Sources */,
+				5A9129032BF345EB00B81B5F /* FirebaseAuthManager.swift in Sources */,
 				5A9128C52BF21FE900B81B5F /* PasswordRecoveryView.swift in Sources */,
 				5A9128F92BF26E8800B81B5F /* GoogleSignIn.swift in Sources */,
 				5A9128CA2BF223DE00B81B5F /* EmailTextField.swift in Sources */,
+				5A91290B2BF3652800B81B5F /* SignUpViewModel.swift in Sources */,
 				5A9128822BF2081800B81B5F /* LoginView.swift in Sources */,
 				5A9128F72BF24F1E00B81B5F /* MainView.swift in Sources */,
+				5A9129092BF3628F00B81B5F /* PasswordRecoveryViewModel.swift in Sources */,
+				5A9129072BF3603700B81B5F /* LoginViewModel.swift in Sources */,
 				5A9128CC2BF223F800B81B5F /* PasswordSecureField.swift in Sources */,
 				5A9129012BF2AE4E00B81B5F /* HeadlineView.swift in Sources */,
 				5A9128802BF2081800B81B5F /* AuthorizationTestApp.swift in Sources */,

@@ -9,11 +9,8 @@ import SwiftUI
 import Firebase
 
 struct PasswordRecoveryView: View {
-    @State private var showAlert = false
-    @State private var errorMessage: String = ""
-    @State private var alertText: String = ""
-    @Binding var email: String
     @Binding var showModal: Bool
+    @StateObject private var viewModel = PasswordRecoveryViewModel()
     
     var body: some View {
         ZStack {
@@ -26,13 +23,13 @@ struct PasswordRecoveryView: View {
                         .font(.title)
                         .foregroundColor(.onyx)
                     
-                    EmailTextField(email: $email)
+                    EmailTextField(email: $viewModel.email)
                 }
                 
                 VStack(spacing: 10) {
                     ButtonView(
                         buttonText: "Send Recovery Email",
-                        buttonAction: { sendPasswordReset() },
+                        buttonAction: { viewModel.sendPasswordReset() },
                         backgroundColor: .haki,
                         foregroundColor: .white)
                     
@@ -45,13 +42,13 @@ struct PasswordRecoveryView: View {
                 .padding(.bottom, 16)
             }
             .padding([.leading, .trailing], 16)
-            .alert(isPresented: $showAlert) {
+            .alert(isPresented: $viewModel.showAlert) {
                 Alert(
-                    title: Text(alertText),
-                    message: Text(errorMessage),
+                    title: Text(viewModel.alertText),
+                    message: Text(viewModel.errorMessage),
                     dismissButton: .default(Text("OK"),
                                             action: {
-                                                if alertText == "Successful Password Reset" {
+                                                if viewModel.alertText == "Successful Password Reset" {
                                                     showModal = false
                                                 }
                                             })
@@ -59,23 +56,8 @@ struct PasswordRecoveryView: View {
             }
         }
     }
-    
-    private func sendPasswordReset() {
-        Auth.auth().sendPasswordReset(withEmail: email) { error in
-            if let error = error {
-                self.errorMessage = error.localizedDescription
-                self.alertText = "Reset Password Error"
-            } else {
-                self.errorMessage = "Check your inbox to reset your password"
-                self.alertText = "Successful Password Reset"
-            }
-            showAlert = true
-        }
-    }
 }
 
 #Preview {
-    PasswordRecoveryView(
-        email: .constant(""),
-        showModal: .constant(true))
+    PasswordRecoveryView(showModal: .constant(true))
 }

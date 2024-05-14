@@ -9,13 +9,7 @@ import SwiftUI
 import Firebase
 
 struct LoginView: View {
-    @State private var email = ""
-    @State private var password = ""
-    @State private var showAlert = false
-    @State private var alertMessage = ""
-    @State private var showSignUp = false
-    @State private var showPasswordRecovery = false
-    @State private var showMain = false
+    @StateObject private var viewModel = LoginViewModel()
 
     var body: some View {
         NavigationView {
@@ -25,12 +19,12 @@ struct LoginView: View {
                 VStack(alignment: .trailing) {
                     VStack(alignment: .leading,spacing: 20) {
                         HeadlineView()
-                        EmailTextField(email: $email)
-                        PasswordSecureField(password: $password, text: "Password")
+                        EmailTextField(email: $viewModel.email)
+                        PasswordSecureField(password: $viewModel.password, text: "Password")
                     }
                     
                     Button("Forgot Password?") {
-                        self.showPasswordRecovery = true
+                        self.viewModel.showPasswordRecovery = true
                         
                     }
                     .font(.subheadline)
@@ -39,23 +33,23 @@ struct LoginView: View {
                     
                     
                     VStack(spacing: 10) {
-                        NavigationLink(destination: MainView(showModal: $showMain), isActive: $showMain) {
+                        NavigationLink(destination: MainView(showModal: $viewModel.showMain), isActive: $viewModel.showMain) {
                             ButtonView(
                             buttonText: "Login",
-                            buttonAction: { loginUserWithEmail() },
+                            buttonAction: { viewModel.loginUserWithEmail() },
                             backgroundColor: .haki,
                             foregroundColor: .white)
-                        .alert(isPresented: $showAlert) {
+                            .alert(isPresented: $viewModel.showAlert) {
                             Alert(
                                 title: Text("Login Error"),
-                                message: Text(alertMessage),
+                                message: Text(viewModel.alertMessage),
                                 dismissButton: .default(Text("OK"))
                             )
                         }
                         }
                         ButtonView(
                             buttonText: "Sign Up",
-                            buttonAction: { self.showSignUp = true },
+                            buttonAction: { self.viewModel.showSignUp = true },
                             backgroundColor: .onyx,
                             foregroundColor: .white)
                     }
@@ -69,36 +63,12 @@ struct LoginView: View {
                     GoogleSignInButton()
                 }
                 .padding([.leading, .trailing], 16)
-                .fullScreenCover(isPresented: $showPasswordRecovery) {
-                    PasswordRecoveryView(
-                        email: $email,
-                        showModal: $showPasswordRecovery
-                    )
+                .fullScreenCover(isPresented: $viewModel.showPasswordRecovery) {
+                    PasswordRecoveryView(showModal: $viewModel.showPasswordRecovery)
                 }
-                .fullScreenCover(isPresented: $showSignUp) {
-                    SignUpView(
-                        showModal: $showSignUp
-                    )
+                .fullScreenCover(isPresented: $viewModel.showSignUp) {
+                    SignUpView(showModal: $viewModel.showSignUp)
                 }
-            }
-        }
-    }
-    
-    private func loginUserWithEmail() {
-        guard !email.isEmpty, !password.isEmpty else {
-            alertMessage = "Please enter both email and password."
-            showAlert = true
-            return
-        }
-
-        Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
-            if let error = error {
-                alertMessage = error.localizedDescription
-                showAlert = true
-            } else {
-                print("User successfully signed in the system")
-                self.showMain = true
-                
             }
         }
     }
